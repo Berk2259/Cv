@@ -5,6 +5,12 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:portfolyo/Models/SkillModels.dart';
+import 'package:portfolyo/Models/ExperienceModels.dart';
+import 'package:portfolyo/Models/ContactInfo.dart';
+import 'package:portfolyo/Contents/SkillContets.dart';
+import 'package:portfolyo/Contents/ExperienceContents.dart';
+import 'package:portfolyo/Contents/ContactInfoContents.dart';
 
 class HakkimdaScreen extends StatelessWidget {
   const HakkimdaScreen({super.key});
@@ -14,17 +20,24 @@ class HakkimdaScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(kIsWeb ? 40.0 : 20.0),
+        //Tüm içerikler kaydırılabilir olsun diye
+        padding: EdgeInsets.all(
+          kIsWeb ? 40.0 : 20.0,
+        ), //Web için 40,mobil için 20 padding verildi.
         child: Center(
+          //Sayfanın ortalanması için
           child: ConstrainedBox(
             constraints: const BoxConstraints(
-              maxWidth: 1200,
+              maxWidth:
+                  1200, //Maximum genişlik sınırı 1200 px, büyük ekranlarda içeriğin fazla genişlemesini engeller.
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment:
+                  CrossAxisAlignment
+                      .start, //sola hizalanır.
               children: [
-                // Header with animated text
                 AnimationConfiguration.staggeredList(
+                  //Her bölüm staggered animasyonuyla sırayla gelmesi için animasyon konfigürasyonuna alınıyor.
                   position: 0,
                   duration: const Duration(
                     milliseconds: 600,
@@ -45,6 +58,7 @@ class HakkimdaScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           AnimatedTextKit(
+                            //isim yazısı daktilo efekti ile geliyor.
                             animatedTexts: [
                               TypewriterAnimatedText(
                                 'Berk Altay',
@@ -81,7 +95,9 @@ class HakkimdaScreen extends StatelessWidget {
                     verticalOffset: 50.0,
                     child: FadeInAnimation(
                       child: Container(
+                        // Beyaz zeminli kart görünümünde profil bölümü.
                         padding: EdgeInsets.all(
+                          //Web için daha geniş padding
                           kIsWeb ? 40 : 25,
                         ),
                         decoration: BoxDecoration(
@@ -100,13 +116,15 @@ class HakkimdaScreen extends StatelessWidget {
                         ),
                         child: Column(
                           children: [
-                            // Profile Image
+                            // Profile Resmi
                             Container(
+                              //Daire şeklinde arka planlı kullanıcı simgesi(ikon olarak)
                               width: kIsWeb ? 150 : 120,
                               height: kIsWeb ? 150 : 120,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 gradient: LinearGradient(
+                                  //Gradient renkli daire içinde kullanıcı ikonu
                                   begin: Alignment.topLeft,
                                   end:
                                       Alignment.bottomRight,
@@ -117,6 +135,7 @@ class HakkimdaScreen extends StatelessWidget {
                                 ),
                               ),
                               child: Icon(
+                                //Kullanıcı ikonu
                                 FontAwesomeIcons.user,
                                 size: kIsWeb ? 70 : 50,
                                 color: Colors.white,
@@ -124,7 +143,7 @@ class HakkimdaScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 20),
 
-                            // Name
+                            // İsim
                             Text(
                               'Berk Altay',
                               style: GoogleFonts.poppins(
@@ -135,7 +154,7 @@ class HakkimdaScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
 
-                            // Title
+                            // Başlık
                             Text(
                               'Flutter Geliştirici',
                               style: GoogleFonts.poppins(
@@ -146,7 +165,7 @@ class HakkimdaScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 15),
 
-                            // Description
+                            // Açıklama
                             Text(
                               'Yaratıcı ve yenilikçi mobil uygulama geliştiricisiyim. Kullanıcı deneyimini ön planda tutarak modern ve etkileyici uygulamalar geliştiriyorum.',
                               textAlign: TextAlign.center,
@@ -187,12 +206,14 @@ class HakkimdaScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           Wrap(
+                            //Çok satıra yayılabilen,kenar boşluklu kapsayıcı
                             spacing: 12,
                             runSpacing: 12,
                             children:
                                 skills
                                     .map(
                                       (skill) => Container(
+                                        //SkillContents.dart dosyasından gelen liste
                                         padding:
                                             EdgeInsets.symmetric(
                                               horizontal:
@@ -293,6 +314,7 @@ class HakkimdaScreen extends StatelessWidget {
                           ...experiences
                               .map(
                                 (exp) => Container(
+                                  //Experience listesi üzerinden kartlar oluşturuluyor.
                                   margin:
                                       const EdgeInsets.only(
                                         bottom: 15,
@@ -544,121 +566,23 @@ class HakkimdaScreen extends StatelessWidget {
   }
 
   Future<void> _launchUrl(String url) async {
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
+    try {
+      final Uri uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(
+          uri,
+          mode: LaunchMode.externalApplication,
+        );
+      } else {
+        // Fallback: Try to launch with system default
+        await launchUrl(
+          uri,
+          mode: LaunchMode.platformDefault,
+        );
+      }
+    } catch (e) {
+      print('Error launching URL: $e');
+      // Simple error handling without ScaffoldMessenger
     }
   }
 }
-
-class Skill {
-  final String name;
-  final IconData icon;
-  final Color color;
-
-  Skill({
-    required this.name,
-    required this.icon,
-    required this.color,
-  });
-}
-
-class Experience {
-  final String title;
-  final String company;
-  final String period;
-  final IconData icon;
-  final Color color;
-
-  Experience({
-    required this.title,
-    required this.company,
-    required this.period,
-    required this.icon,
-    required this.color,
-  });
-}
-
-class ContactInfo {
-  final String text;
-  final IconData icon;
-  final Color color;
-  final String url;
-
-  ContactInfo({
-    required this.text,
-    required this.icon,
-    required this.color,
-    required this.url,
-  });
-}
-
-final List<Skill> skills = [
-  Skill(
-    name: 'Flutter',
-    icon: FontAwesomeIcons.mobile,
-    color: Colors.blue,
-  ),
-  Skill(
-    name: 'Dart',
-    icon: FontAwesomeIcons.code,
-    color: Colors.cyan,
-  ),
-  Skill(
-    name: 'Firebase',
-    icon: FontAwesomeIcons.fire,
-    color: Colors.orange,
-  ),
-  Skill(
-    name: 'Git',
-    icon: FontAwesomeIcons.github,
-    color: Colors.black,
-  ),
-  Skill(
-    name: 'UI/UX',
-    icon: FontAwesomeIcons.palette,
-    color: Colors.purple,
-  ),
-  Skill(
-    name: 'API',
-    icon: FontAwesomeIcons.server,
-    color: Colors.green,
-  ),
-];
-
-final List<Experience> experiences = [
-  Experience(
-    title: 'Flutter Geliştirici',
-    company: 'Tech Company',
-    period: '2023 - Günümüz',
-    icon: FontAwesomeIcons.mobile,
-    color: Colors.blue,
-  ),
-  Experience(
-    title: 'Mobil Uygulama Geliştirici',
-    company: 'Startup',
-    period: '2022 - 2023',
-    icon: FontAwesomeIcons.code,
-    color: Colors.green,
-  ),
-];
-
-final List<ContactInfo> contactInfo = [
-  ContactInfo(
-    text: 'github.com/username',
-    icon: FontAwesomeIcons.github,
-    color: Colors.black,
-    url: 'https://github.com/username',
-  ),
-  ContactInfo(
-    text: 'linkedin.com/in/username',
-    icon: FontAwesomeIcons.linkedin,
-    color: Colors.blue,
-    url: 'https://linkedin.com/in/username',
-  ),
-  ContactInfo(
-    text: 'email@example.com',
-    icon: FontAwesomeIcons.envelope,
-    color: Colors.red,
-    url: 'mailto:email@example.com',
-  ),
-];

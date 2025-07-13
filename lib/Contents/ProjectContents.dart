@@ -4,23 +4,24 @@ import 'package:portfolyo/Models/ProjectModels.dart';
 
 final List<Project> projects = [
   Project(
-    name: 'E-Ticaret Uygulaması',
-    description: 'Modern e-ticaret platformu',
-    icon: FontAwesomeIcons.shoppingCart,
+    name: 'Todo List Uygulaması',
+    description: 'Kişisel planlama',
+    icon: FontAwesomeIcons.clipboardList,
     gradientColors: [Colors.purple, Colors.pink],
-    technologies: ['Flutter', 'Firebase', 'Dart'],
-    githubUrl: 'https://github.com',
-    liveUrl: 'https://example.com',
+    technologies: ['Flutter', 'Dart'],
+    githubUrl: 'https://github.com/Berk2259/Todo-List',
+    liveUrl: 'https://flutter.dev',
   ),
   Project(
-    name: 'Sosyal Medya App',
-    description: 'Kullanıcı etkileşimli sosyal platform',
-    icon: FontAwesomeIcons.users,
+    name: 'Cv Uygulaması ve Sitesi',
+    description: 'Kişisel Portfolyom',
+    icon: FontAwesomeIcons.addressCard,
     gradientColors: [Colors.blue, Colors.cyan],
-    technologies: ['Flutter', 'Node.js', 'MongoDB'],
-    githubUrl: 'https://github.com',
+    technologies: ['Flutter', 'dart'],
+    githubUrl: 'https://github.com/Berk2259/Cv',
+    liveUrl: 'https://dart.dev',
   ),
-  Project(
+  /*Project(
     name: 'Fitness Takip',
     description: 'Kişisel fitness takip uygulaması',
     icon: FontAwesomeIcons.dumbbell,
@@ -52,4 +53,5 @@ final List<Project> projects = [
     technologies: ['Flutter', 'Firebase', 'Bloc'],
     githubUrl: 'https://github.com',
   ),
+  */
 ];

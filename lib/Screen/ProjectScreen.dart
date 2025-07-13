@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import '../Models/ProjectModels.dart';
 import '../Contents/ProjectContents.dart';
+import 'ProjectDetailScreen.dart';
 
 class ProjectScreen extends StatelessWidget {
   const ProjectScreen({super.key});
@@ -120,126 +121,168 @@ class ProjectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 10,
-            offset: const Offset(0, 5),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder:
+                (context) =>
+                    ProjectDetailScreen(project: project),
           ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Project Image
-            Expanded(
-              flex: 4, // Daha büyük gradient alanı
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: project.gradientColors,
-                  ),
-                ),
-                child: Icon(
-                  project.icon,
-                  size: 40,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-
-            // Project Info
-            Expanded(
-              flex: 3, // Daha büyük bilgi alanı
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      project.name,
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.grey[800],
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      project.description,
-                      style: GoogleFonts.poppins(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const Spacer(),
-                    Row(
-                      children: [
-                        ...project.technologies
-                            .take(2)
-                            .map(
-                              (tech) => Container(
-                                margin:
-                                    const EdgeInsets.only(
-                                      right: 6,
-                                    ),
-                                padding:
-                                    const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                      vertical: 4,
-                                    ),
-                                decoration: BoxDecoration(
-                                  color: Colors.blue[100],
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                        12,
-                                      ),
-                                ),
-                                child: Text(
-                                  tech,
-                                  style:
-                                      GoogleFonts.poppins(
-                                        fontSize: 10,
-                                        fontWeight:
-                                            FontWeight.w600,
-                                        color:
-                                            Colors
-                                                .blue[700],
-                                      ),
-                                ),
-                              ),
-                            ),
-                        if (project.technologies.length > 2)
-                          Text(
-                            '+${project.technologies.length - 2}',
-                            style: GoogleFonts.poppins(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey[500],
-                            ),
-                          ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 10,
+              offset: const Offset(0, 5),
             ),
           ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Project Image
+              Expanded(
+                flex: 4, // Daha büyük gradient alanı
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: project.gradientColors,
+                    ),
+                  ),
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: Icon(
+                          project.icon,
+                          size: 40,
+                          color: Colors.white,
+                        ),
+                      ),
+                      // Hover effect for web
+                      if (kIsWeb)
+                        Positioned(
+                          top: 10,
+                          right: 10,
+                          child: Container(
+                            padding: const EdgeInsets.all(
+                              8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white
+                                  .withOpacity(0.2),
+                              borderRadius:
+                                  BorderRadius.circular(20),
+                            ),
+                            child: Icon(
+                              Icons.arrow_forward,
+                              color: Colors.white,
+                              size: 16,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+
+              // Project Info
+              Expanded(
+                flex: 3, // Daha büyük bilgi alanı
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment:
+                        CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        project.name,
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.grey[800],
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        project.description,
+                        style: GoogleFonts.poppins(
+                          fontSize: 12,
+                          color: Colors.grey[600],
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          ...project.technologies
+                              .take(2)
+                              .map(
+                                (tech) => Container(
+                                  margin:
+                                      const EdgeInsets.only(
+                                        right: 6,
+                                      ),
+                                  padding:
+                                      const EdgeInsets.symmetric(
+                                        horizontal: 8,
+                                        vertical: 4,
+                                      ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue[100],
+                                    borderRadius:
+                                        BorderRadius.circular(
+                                          12,
+                                        ),
+                                  ),
+                                  child: Text(
+                                    tech,
+                                    style:
+                                        GoogleFonts.poppins(
+                                          fontSize: 10,
+                                          fontWeight:
+                                              FontWeight
+                                                  .w600,
+                                          color:
+                                              Colors
+                                                  .blue[700],
+                                        ),
+                                  ),
+                                ),
+                              ),
+                          if (project.technologies.length >
+                              2)
+                            Text(
+                              '+${project.technologies.length - 2}',
+                              style: GoogleFonts.poppins(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.grey[500],
+                              ),
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
