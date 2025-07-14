@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:portfolyo/Models/ContactInfo.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+//Contact section
 final List<ContactInfo> contactInfo = [
+  //Bu liste ContactInfo adlı model sınıfından 3 tane iletişim bilgisi nesnesi içeriyor.
   ContactInfo(
     text: 'github',
     icon: FontAwesomeIcons.github,
@@ -13,8 +15,7 @@ final List<ContactInfo> contactInfo = [
     text: 'linkedin',
     icon: FontAwesomeIcons.linkedin,
     color: Colors.blue,
-    url:
-        'https://www.linkedin.com/in/berk-altay-46052a374/',
+    url: 'https://www.linkedin.com/in/berk-altay-46052a374/',
   ),
   ContactInfo(
     text: 'Mail',

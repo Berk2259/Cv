@@ -4,8 +4,8 @@ import 'package:portfolyo/Screen/ProjectScreen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:io' show Platform;
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart'
+    show kIsWeb; //platformun web olup olmadığını kontrol etmek için
 
 class Navigation extends StatefulWidget {
   const Navigation({super.key});
@@ -15,9 +15,10 @@ class Navigation extends StatefulWidget {
 }
 
 class _HomeNavigationState extends State<Navigation> {
-  int _page = 1;
+  int _page = 1; //başlangıçta aktif sayfa 1, yani index1
 
   final List<Widget> _pages = [
+    //geçiş yapılacak sayfaların listesi
     ProjectScreen(),
     HakkimdaScreen(),
   ];
@@ -25,6 +26,7 @@ class _HomeNavigationState extends State<Navigation> {
   @override
   Widget build(BuildContext context) {
     final items = [
+      //mobil için curved navigation bar üzerindeki ikonlar
       Icon(FontAwesomeIcons.code, color: Colors.white),
       Icon(FontAwesomeIcons.user, color: Colors.white),
     ];
@@ -34,9 +36,9 @@ class _HomeNavigationState extends State<Navigation> {
       return Scaffold(
         backgroundColor: Colors.grey[50],
         appBar: AppBar(
-          centerTitle: true,
+          centerTitle: true, //başlık ortalanır
           backgroundColor: Colors.blue,
-          elevation: 0,
+          elevation: 0, //gölge yok
           title: Text(
             'Portfolyo',
             style: GoogleFonts.poppins(
@@ -46,21 +48,19 @@ class _HomeNavigationState extends State<Navigation> {
             ),
           ),
           actions: [
-            // Web için navigation butonları
+            // Web için navigation butonları app barda
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 children: [
                   _buildWebNavButton(
-                    0,
+                    0, //index değeri
                     'Projeler',
                     FontAwesomeIcons.code,
                   ),
                   const SizedBox(width: 20),
                   _buildWebNavButton(
-                    1,
+                    1, //index değeri
                     'Hakkımda',
                     FontAwesomeIcons.user,
                   ),
@@ -69,14 +69,14 @@ class _HomeNavigationState extends State<Navigation> {
             ),
           ],
         ),
-        body: _pages[_page],
+        body: _pages[_page], //seçili sayfa gösterilir.
       );
     }
 
     // Mobil için curved navigation
     return Scaffold(
       extendBody: false,
-      body: _pages[_page],
+      body: _pages[_page], //seçili sayfa gösterilir.
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.blue,
@@ -91,61 +91,59 @@ class _HomeNavigationState extends State<Navigation> {
         ),
       ),
       bottomNavigationBar: CurvedNavigationBar(
-        items: items,
-        index: _page,
-        height: 65.0,
-        color: Colors.blue[600]!,
-        backgroundColor: Colors.grey[100]!,
-        buttonBackgroundColor: Colors.blue[700]!,
-        animationDuration: Duration(milliseconds: 400),
+        items: items, //ikonlar
+        index: _page, //başlangıçta seçili sayfa
+        height: 65.0, //navigation bar yüksekliği 75 e eşit veya küçük olmalı
+        color: Colors.blue[600]!, //arka plan rengi
+        backgroundColor: Colors.grey[100]!, //scaffold arka plan rengi ile uyumlu
+        buttonBackgroundColor: Colors.blue[700]!, //seçili buton rengi
+        animationDuration: Duration(milliseconds: 400), //geçiş animasyonu süresi
         onTap: (index) {
           setState(() {
-            _page = index;
+            _page = index; //seçili sayfa indexini günceller.
           });
         },
       ),
     );
   }
 
+  //web için özel Navigation Butonları oluşturuyoruz
   Widget _buildWebNavButton(
-    int index,
-    String title,
-    IconData icon,
+    int index, //Hangi sayfa
+    String title, //buton yazısı
+    IconData icon, //buton ikonu
   ) {
-    final isSelected = _page == index;
+    final isSelected = _page == index; //şu anki seçili sayfa mı kontrolü
     return GestureDetector(
       onTap: () {
         setState(() {
-          _page = index;
+          _page = index; //butona tıklayınca sayfa değişir
         });
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 10,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
           color:
-              isSelected
+              isSelected //seçili ise mavi sınır, değilse şeffaf
                   ? Colors.blue[600]
                   : Colors.transparent,
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(25), //yuvarlar köşeler
           border: Border.all(
             color:
-                isSelected
+                isSelected //seçili ise mavi sınır,değilse gri sınır
                     ? Colors.blue[600]!
                     : Colors.grey[300]!,
             width: 1,
           ),
         ),
         child: Row(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.min, //Row sadece içeriği kadar geniş
           children: [
             Icon(
               icon,
               size: 16,
               color:
-                  isSelected
+                  isSelected //seçili ise beyaz ikon, değilse gri ikon
                       ? Colors.white
                       : Colors.grey[600],
             ),
@@ -156,7 +154,7 @@ class _HomeNavigationState extends State<Navigation> {
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
                 color:
-                    isSelected
+                    isSelected //seçili ise beyaz yazı,değilse gri yazı
                         ? Colors.white
                         : Colors.grey[600],
               ),

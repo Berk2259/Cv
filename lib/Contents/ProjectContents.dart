@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portfolyo/Models/ProjectModels.dart';
 
+//Project Section
 final List<Project> projects = [
+  //yapılan projeleri tutan bir liste
   Project(
     name: 'Todo List Uygulaması',
     description: 'Kişisel planlama',

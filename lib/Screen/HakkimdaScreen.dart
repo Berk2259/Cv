@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart'; //Staggered(sırayla gecikmeli) animasyonlar için
+import 'package:animated_text_kit/animated_text_kit.dart'; //Daktilo tipi animasyonlu yazılar için
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart'
+    show kIsWeb; //uygulamanın web platformunda mı çalıştığını kontrol etmek için.
 import 'package:portfolyo/Models/SkillModels.dart';
 import 'package:portfolyo/Models/ExperienceModels.dart';
 import 'package:portfolyo/Models/ContactInfo.dart';
@@ -18,36 +19,33 @@ class HakkimdaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      //Temel Sayfa İskeleti
+      backgroundColor: Colors.grey[50], //Arka plan rengi çok açık gri
       body: SingleChildScrollView(
-        //Tüm içerikler kaydırılabilir olsun diye
+        //içeriğin kaydırılabilir olmasını sağlar
         padding: EdgeInsets.all(
-          kIsWeb ? 40.0 : 20.0,
-        ), //Web için 40,mobil için 20 padding verildi.
+          kIsWeb ? 40.0 : 20.0, //Eğer platform web ise 40, değilse 20 padding verir.
+        ),
         child: Center(
-          //Sayfanın ortalanması için
+          //tüm içeriği yatay olarak ortalar.
           child: ConstrainedBox(
             constraints: const BoxConstraints(
               maxWidth:
                   1200, //Maximum genişlik sınırı 1200 px, büyük ekranlarda içeriğin fazla genişlemesini engeller.
             ),
             child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment
-                      .start, //sola hizalanır.
+              //içeriği dikey sıralar
+              crossAxisAlignment: CrossAxisAlignment.start, //içeriği sola hizalar
               children: [
                 AnimationConfiguration.staggeredList(
-                  //Her bölüm staggered animasyonuyla sırayla gelmesi için animasyon konfigürasyonuna alınıyor.
+                  //ilk animasyon konfigürasyonu
                   position: 0,
-                  duration: const Duration(
-                    milliseconds: 600,
-                  ),
+                  duration: const Duration(milliseconds: 600),
                   child: SlideAnimation(
-                    verticalOffset: 50.0,
+                    verticalOffset: 50.0, //yukarıdan kayarak gelme efekti
                     child: FadeInAnimation(
                       child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Merhaba, ben',
@@ -58,56 +56,48 @@ class HakkimdaScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           AnimatedTextKit(
-                            //isim yazısı daktilo efekti ile geliyor.
+                            //ismin yazı efektiyle animasyonu
                             animatedTexts: [
                               TypewriterAnimatedText(
+                                //Daktilo efekti ile isim yazılıyor
                                 'Berk Altay',
-                                textStyle:
-                                    GoogleFonts.poppins(
-                                      fontSize:
-                                          kIsWeb ? 40 : 32,
-                                      fontWeight:
-                                          FontWeight.w800,
-                                      color:
-                                          Colors.blue[700],
-                                    ),
+                                textStyle: GoogleFonts.poppins(
+                                  fontSize: kIsWeb ? 40 : 32,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.blue[700],
+                                ),
                                 speed: const Duration(
-                                  milliseconds: 100,
+                                  milliseconds: 100, //yazma hızı
                                 ),
                               ),
                             ],
-                            totalRepeatCount: 1,
+                            totalRepeatCount: 1, //animasyonun kaç kez oynatılacağı
                           ),
                         ],
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
-
+                const SizedBox(height: 30), //bölümler arası boşluk
                 // Profile Card
                 AnimationConfiguration.staggeredList(
                   position: 1,
-                  duration: const Duration(
-                    milliseconds: 600,
-                  ),
+                  duration: const Duration(milliseconds: 600),
                   child: SlideAnimation(
                     verticalOffset: 50.0,
                     child: FadeInAnimation(
                       child: Container(
-                        // Beyaz zeminli kart görünümünde profil bölümü.
+                        //kart yapısı beya arka planlı kutu
                         padding: EdgeInsets.all(
-                          //Web için daha geniş padding
-                          kIsWeb ? 40 : 25,
+                          kIsWeb ? 40 : 25, //Web için daha geniş padding
                         ),
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius:
-                              BorderRadius.circular(25),
+                          borderRadius: BorderRadius.circular(25), //yuvarlatılan köşeler
                           boxShadow: [
+                            //gölge efekti
                             BoxShadow(
-                              color: Colors.grey
-                                  .withOpacity(0.1),
+                              color: Colors.grey.withOpacity(0.1),
                               spreadRadius: 1,
                               blurRadius: 15,
                               offset: const Offset(0, 8),
@@ -126,12 +116,8 @@ class HakkimdaScreen extends StatelessWidget {
                                 gradient: LinearGradient(
                                   //Gradient renkli daire içinde kullanıcı ikonu
                                   begin: Alignment.topLeft,
-                                  end:
-                                      Alignment.bottomRight,
-                                  colors: [
-                                    Colors.blue[400]!,
-                                    Colors.purple[400]!,
-                                  ],
+                                  end: Alignment.bottomRight,
+                                  colors: [Colors.blue[400]!, Colors.purple[400]!],
                                 ),
                               ),
                               child: Icon(
@@ -183,18 +169,15 @@ class HakkimdaScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
 
-                // Skills Section
+                // Yetenekler Bölümü
                 AnimationConfiguration.staggeredList(
                   position: 2,
-                  duration: const Duration(
-                    milliseconds: 600,
-                  ),
+                  duration: const Duration(milliseconds: 600),
                   child: SlideAnimation(
                     verticalOffset: 50.0,
                     child: FadeInAnimation(
                       child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Yeteneklerim',
@@ -214,66 +197,33 @@ class HakkimdaScreen extends StatelessWidget {
                                     .map(
                                       (skill) => Container(
                                         //SkillContents.dart dosyasından gelen liste
-                                        padding:
-                                            EdgeInsets.symmetric(
-                                              horizontal:
-                                                  kIsWeb
-                                                      ? 20
-                                                      : 16,
-                                              vertical:
-                                                  kIsWeb
-                                                      ? 12
-                                                      : 10,
-                                            ),
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: kIsWeb ? 20 : 16,
+                                          vertical: kIsWeb ? 12 : 10,
+                                        ),
                                         decoration: BoxDecoration(
-                                          color: skill.color
-                                              .withOpacity(
-                                                0.1,
-                                              ),
-                                          borderRadius:
-                                              BorderRadius.circular(
-                                                25,
-                                              ),
+                                          color: skill.color.withOpacity(0.1),
+                                          borderRadius: BorderRadius.circular(25),
                                           border: Border.all(
-                                            color: skill
-                                                .color
-                                                .withOpacity(
-                                                  0.3,
-                                                ),
+                                            color: skill.color.withOpacity(0.3),
                                             width: 1,
                                           ),
                                         ),
                                         child: Row(
-                                          mainAxisSize:
-                                              MainAxisSize
-                                                  .min,
+                                          mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Icon(
                                               skill.icon,
-                                              size:
-                                                  kIsWeb
-                                                      ? 18
-                                                      : 16,
-                                              color:
-                                                  skill
-                                                      .color,
+                                              size: kIsWeb ? 18 : 16,
+                                              color: skill.color,
                                             ),
-                                            const SizedBox(
-                                              width: 8,
-                                            ),
+                                            const SizedBox(width: 8),
                                             Text(
                                               skill.name,
                                               style: GoogleFonts.poppins(
-                                                fontSize:
-                                                    kIsWeb
-                                                        ? 16
-                                                        : 14,
-                                                fontWeight:
-                                                    FontWeight
-                                                        .w600,
-                                                color:
-                                                    skill
-                                                        .color,
+                                                fontSize: kIsWeb ? 16 : 14,
+                                                fontWeight: FontWeight.w600,
+                                                color: skill.color,
                                               ),
                                             ),
                                           ],
@@ -289,18 +239,15 @@ class HakkimdaScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
 
-                // Experience Section
+                // Deneyim Bölümü
                 AnimationConfiguration.staggeredList(
                   position: 3,
-                  duration: const Duration(
-                    milliseconds: 600,
-                  ),
+                  duration: const Duration(milliseconds: 600),
                   child: SlideAnimation(
                     verticalOffset: 50.0,
                     child: FadeInAnimation(
                       child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Deneyim',
@@ -315,117 +262,62 @@ class HakkimdaScreen extends StatelessWidget {
                               .map(
                                 (exp) => Container(
                                   //Experience listesi üzerinden kartlar oluşturuluyor.
-                                  margin:
-                                      const EdgeInsets.only(
-                                        bottom: 15,
-                                      ),
-                                  padding: EdgeInsets.all(
-                                    kIsWeb ? 25 : 20,
-                                  ),
+                                  margin: const EdgeInsets.only(bottom: 15),
+                                  padding: EdgeInsets.all(kIsWeb ? 25 : 20),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius:
-                                        BorderRadius.circular(
-                                          15,
-                                        ),
+                                    borderRadius: BorderRadius.circular(15),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.grey
-                                            .withOpacity(
-                                              0.05,
-                                            ),
+                                        color: Colors.grey.withOpacity(0.05),
                                         spreadRadius: 1,
                                         blurRadius: 10,
-                                        offset:
-                                            const Offset(
-                                              0,
-                                              3,
-                                            ),
+                                        offset: const Offset(0, 3),
                                       ),
                                     ],
                                   ),
                                   child: Row(
                                     children: [
                                       Container(
-                                        width:
-                                            kIsWeb
-                                                ? 60
-                                                : 50,
-                                        height:
-                                            kIsWeb
-                                                ? 60
-                                                : 50,
+                                        width: kIsWeb ? 60 : 50,
+                                        height: kIsWeb ? 60 : 50,
                                         decoration: BoxDecoration(
-                                          color: exp.color
-                                              .withOpacity(
-                                                0.1,
-                                              ),
-                                          borderRadius:
-                                              BorderRadius.circular(
-                                                12,
-                                              ),
+                                          color: exp.color.withOpacity(0.1),
+                                          borderRadius: BorderRadius.circular(12),
                                         ),
                                         child: Icon(
                                           exp.icon,
                                           color: exp.color,
-                                          size:
-                                              kIsWeb
-                                                  ? 28
-                                                  : 24,
+                                          size: kIsWeb ? 28 : 24,
                                         ),
                                       ),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
+                                      const SizedBox(width: 15),
                                       Expanded(
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment
-                                                  .start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               exp.title,
                                               style: GoogleFonts.poppins(
-                                                fontSize:
-                                                    kIsWeb
-                                                        ? 18
-                                                        : 16,
-                                                fontWeight:
-                                                    FontWeight
-                                                        .w700,
-                                                color:
-                                                    Colors
-                                                        .grey[800],
+                                                fontSize: kIsWeb ? 18 : 16,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.grey[800],
                                               ),
                                             ),
-                                            const SizedBox(
-                                              height: 4,
-                                            ),
+                                            const SizedBox(height: 4),
                                             Text(
                                               exp.company,
                                               style: GoogleFonts.poppins(
-                                                fontSize:
-                                                    kIsWeb
-                                                        ? 16
-                                                        : 14,
-                                                color:
-                                                    Colors
-                                                        .grey[600],
+                                                fontSize: kIsWeb ? 16 : 14,
+                                                color: Colors.grey[600],
                                               ),
                                             ),
-                                            const SizedBox(
-                                              height: 4,
-                                            ),
+                                            const SizedBox(height: 4),
                                             Text(
                                               exp.period,
                                               style: GoogleFonts.poppins(
-                                                fontSize:
-                                                    kIsWeb
-                                                        ? 14
-                                                        : 12,
-                                                color:
-                                                    Colors
-                                                        .grey[500],
+                                                fontSize: kIsWeb ? 14 : 12,
+                                                color: Colors.grey[500],
                                               ),
                                             ),
                                           ],
@@ -443,18 +335,15 @@ class HakkimdaScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
 
-                // Contact Section
+                // İletişim bölümü
                 AnimationConfiguration.staggeredList(
                   position: 4,
-                  duration: const Duration(
-                    milliseconds: 600,
-                  ),
+                  duration: const Duration(milliseconds: 600),
                   child: SlideAnimation(
                     verticalOffset: 50.0,
                     child: FadeInAnimation(
                       child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'İletişim',
@@ -467,40 +356,20 @@ class HakkimdaScreen extends StatelessWidget {
                           const SizedBox(height: 20),
                           ...contactInfo
                               .map(
-                                (
-                                  contact,
-                                ) => GestureDetector(
-                                  onTap:
-                                      () => _launchUrl(
-                                        contact.url,
-                                      ),
+                                (contact) => GestureDetector(
+                                  onTap: () => _launchUrl(contact.url),
                                   child: Container(
-                                    margin:
-                                        const EdgeInsets.only(
-                                          bottom: 12,
-                                        ),
-                                    padding: EdgeInsets.all(
-                                      kIsWeb ? 20 : 16,
-                                    ),
+                                    margin: const EdgeInsets.only(bottom: 12),
+                                    padding: EdgeInsets.all(kIsWeb ? 20 : 16),
                                     decoration: BoxDecoration(
                                       color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(
-                                            12,
-                                          ),
+                                      borderRadius: BorderRadius.circular(12),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Colors.grey
-                                              .withOpacity(
-                                                0.05,
-                                              ),
+                                          color: Colors.grey.withOpacity(0.05),
                                           spreadRadius: 1,
                                           blurRadius: 8,
-                                          offset:
-                                              const Offset(
-                                                0,
-                                                2,
-                                              ),
+                                          offset: const Offset(0, 2),
                                         ),
                                       ],
                                     ),
@@ -508,40 +377,23 @@ class HakkimdaScreen extends StatelessWidget {
                                       children: [
                                         Icon(
                                           contact.icon,
-                                          color:
-                                              contact.color,
-                                          size:
-                                              kIsWeb
-                                                  ? 24
-                                                  : 20,
+                                          color: contact.color,
+                                          size: kIsWeb ? 24 : 20,
                                         ),
-                                        const SizedBox(
-                                          width: 12,
-                                        ),
+                                        const SizedBox(width: 12),
                                         Expanded(
                                           child: Text(
                                             contact.text,
                                             style: GoogleFonts.poppins(
-                                              fontSize:
-                                                  kIsWeb
-                                                      ? 16
-                                                      : 14,
-                                              color:
-                                                  Colors
-                                                      .grey[700],
+                                              fontSize: kIsWeb ? 16 : 14,
+                                              color: Colors.grey[700],
                                             ),
                                           ),
                                         ),
                                         Icon(
-                                          Icons
-                                              .arrow_forward_ios,
-                                          size:
-                                              kIsWeb
-                                                  ? 18
-                                                  : 16,
-                                          color:
-                                              Colors
-                                                  .grey[400],
+                                          Icons.arrow_forward_ios,
+                                          size: kIsWeb ? 18 : 16,
+                                          color: Colors.grey[400],
                                         ),
                                       ],
                                     ),
@@ -554,9 +406,7 @@ class HakkimdaScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: kIsWeb ? 50 : 100,
-                ), // Extra bottom padding
+                SizedBox(height: kIsWeb ? 50 : 100), // Ekstra alt boşluk
               ],
             ),
           ),
@@ -567,22 +417,20 @@ class HakkimdaScreen extends StatelessWidget {
 
   Future<void> _launchUrl(String url) async {
     try {
-      final Uri uri = Uri.parse(url);
+      final Uri uri = Uri.parse(url); //Url'yi Uri tipine çeviriyoruz
       if (await canLaunchUrl(uri)) {
         await launchUrl(
           uri,
-          mode: LaunchMode.externalApplication,
+          mode: LaunchMode.externalApplication, //Harici tarayıcıda aç
         );
       } else {
-        // Fallback: Try to launch with system default
         await launchUrl(
           uri,
-          mode: LaunchMode.platformDefault,
+          mode: LaunchMode.platformDefault, //Fallback
         );
       }
     } catch (e) {
-      print('Error launching URL: $e');
-      // Simple error handling without ScaffoldMessenger
+      print('Error launching URL: $e'); //Hata varsa konsolo yaz
     }
   }
 }

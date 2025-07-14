@@ -7,26 +7,23 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../Models/ProjectModels.dart';
 
 class ProjectDetailScreen extends StatelessWidget {
-  final Project project;
+  final Project project; //Detayları gösterilecek proje bilgisi
 
   const ProjectDetailScreen({
     super.key,
-    required this.project,
+    required this.project, //Constructor ile gelen proje bilgisi
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Colors.grey[50], //Açık gri arka plan yapısı
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        backgroundColor: Colors.transparent, //Arka plan saydam
+        elevation: 0, //gölge yok
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.grey[800],
-          ),
-          onPressed: () => Navigator.pop(context),
+          icon: Icon(Icons.arrow_back, color: Colors.grey[800]),
+          onPressed: () => Navigator.pop(context), //önceki sayfaya dönme işlevi
         ),
         title: Text(
           'Proje Detayı',
@@ -38,81 +35,60 @@ class ProjectDetailScreen extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(kIsWeb ? 40 : 20),
+        //kaydırılabilir tüm gövde
+        padding: EdgeInsets.all(kIsWeb ? 40 : 20), //web'te daha geniş boşluk
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(
-              maxWidth: 800,
+              maxWidth: 800, //içerik en fazla 800px olur
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Project Header
+                //Proje başlığı
                 AnimationConfiguration.staggeredList(
                   position: 0,
-                  duration: const Duration(
-                    milliseconds: 600,
-                  ),
+                  duration: const Duration(milliseconds: 600),
                   child: SlideAnimation(
                     verticalOffset: 50.0,
                     child: FadeInAnimation(
                       child: Container(
-                        padding: EdgeInsets.all(
-                          kIsWeb ? 40 : 25,
-                        ),
+                        padding: EdgeInsets.all(kIsWeb ? 40 : 25),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
-                            colors: project.gradientColors,
+                            colors: project.gradientColors, //modelden gelen renk geçişi
                           ),
-                          borderRadius:
-                              BorderRadius.circular(25),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                         child: Row(
                           children: [
                             Icon(
-                              project.icon,
+                              project.icon, //modelden gelen ikon
                               size: kIsWeb ? 80 : 60,
                               color: Colors.white,
                             ),
                             const SizedBox(width: 20),
                             Expanded(
                               child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment
-                                        .start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     project.name,
-                                    style:
-                                        GoogleFonts.poppins(
-                                          fontSize:
-                                              kIsWeb
-                                                  ? 32
-                                                  : 28,
-                                          fontWeight:
-                                              FontWeight
-                                                  .w800,
-                                          color:
-                                              Colors.white,
-                                        ),
+                                    style: GoogleFonts.poppins(
+                                      fontSize: kIsWeb ? 32 : 28,
+                                      fontWeight: FontWeight.w800,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
                                     project.description,
-                                    style:
-                                        GoogleFonts.poppins(
-                                          fontSize:
-                                              kIsWeb
-                                                  ? 18
-                                                  : 16,
-                                          color: Colors
-                                              .white
-                                              .withOpacity(
-                                                0.9,
-                                              ),
-                                        ),
+                                    style: GoogleFonts.poppins(
+                                      fontSize: kIsWeb ? 18 : 16,
+                                      color: Colors.white.withOpacity(0.9),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -125,18 +101,15 @@ class ProjectDetailScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
 
-                // Technologies Section
+                // Teknoloji bölümü
                 AnimationConfiguration.staggeredList(
                   position: 1,
-                  duration: const Duration(
-                    milliseconds: 600,
-                  ),
+                  duration: const Duration(milliseconds: 600),
                   child: SlideAnimation(
                     verticalOffset: 50.0,
                     child: FadeInAnimation(
                       child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Kullanılan Teknolojiler',
@@ -154,45 +127,24 @@ class ProjectDetailScreen extends StatelessWidget {
                                 project.technologies
                                     .map(
                                       (tech) => Container(
-                                        padding:
-                                            EdgeInsets.symmetric(
-                                              horizontal:
-                                                  kIsWeb
-                                                      ? 20
-                                                      : 16,
-                                              vertical:
-                                                  kIsWeb
-                                                      ? 12
-                                                      : 10,
-                                            ),
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: kIsWeb ? 20 : 16,
+                                          vertical: kIsWeb ? 12 : 10,
+                                        ),
                                         decoration: BoxDecoration(
-                                          color:
-                                              Colors
-                                                  .blue[100],
-                                          borderRadius:
-                                              BorderRadius.circular(
-                                                25,
-                                              ),
+                                          color: Colors.blue[100],
+                                          borderRadius: BorderRadius.circular(25),
                                           border: Border.all(
-                                            color:
-                                                Colors
-                                                    .blue[300]!,
+                                            color: Colors.blue[300]!,
                                             width: 1,
                                           ),
                                         ),
                                         child: Text(
                                           tech,
                                           style: GoogleFonts.poppins(
-                                            fontSize:
-                                                kIsWeb
-                                                    ? 16
-                                                    : 14,
-                                            fontWeight:
-                                                FontWeight
-                                                    .w600,
-                                            color:
-                                                Colors
-                                                    .blue[700],
+                                            fontSize: kIsWeb ? 16 : 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.blue[700],
                                           ),
                                         ),
                                       ),
@@ -209,15 +161,12 @@ class ProjectDetailScreen extends StatelessWidget {
                 // Project Details
                 AnimationConfiguration.staggeredList(
                   position: 2,
-                  duration: const Duration(
-                    milliseconds: 600,
-                  ),
+                  duration: const Duration(milliseconds: 600),
                   child: SlideAnimation(
                     verticalOffset: 50.0,
                     child: FadeInAnimation(
                       child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Proje Detayları',
@@ -229,29 +178,21 @@ class ProjectDetailScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           Container(
-                            padding: EdgeInsets.all(
-                              kIsWeb ? 30 : 20,
-                            ),
+                            padding: EdgeInsets.all(kIsWeb ? 30 : 20),
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(20),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.grey
-                                      .withOpacity(0.1),
+                                  color: Colors.grey.withOpacity(0.1),
                                   spreadRadius: 1,
                                   blurRadius: 15,
-                                  offset: const Offset(
-                                    0,
-                                    8,
-                                  ),
+                                  offset: const Offset(0, 8),
                                 ),
                               ],
                             ),
                             child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 _buildDetailItem(
                                   Icons.description,
@@ -283,15 +224,12 @@ class ProjectDetailScreen extends StatelessWidget {
                 // Links Section
                 AnimationConfiguration.staggeredList(
                   position: 3,
-                  duration: const Duration(
-                    milliseconds: 600,
-                  ),
+                  duration: const Duration(milliseconds: 600),
                   child: SlideAnimation(
                     verticalOffset: 50.0,
                     child: FadeInAnimation(
                       child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Bağlantılar',
@@ -313,16 +251,13 @@ class ProjectDetailScreen extends StatelessWidget {
                                     project.githubUrl!,
                                   ),
                                 ),
-                              if (project.githubUrl !=
-                                      null &&
-                                  project.liveUrl != null)
+                              if (project.githubUrl != null && project.liveUrl != null)
                                 const SizedBox(width: 15),
                               if (project.liveUrl != null)
                                 Expanded(
                                   child: _buildLinkButton(
                                     'Canlı Demo',
-                                    FontAwesomeIcons
-                                        .externalLinkAlt,
+                                    FontAwesomeIcons.externalLinkAlt,
                                     Colors.green,
                                     project.liveUrl!,
                                   ),
@@ -343,11 +278,7 @@ class ProjectDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailItem(
-    IconData icon,
-    String title,
-    String description,
-  ) {
+  Widget _buildDetailItem(IconData icon, String title, String description) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -357,11 +288,7 @@ class ProjectDetailScreen extends StatelessWidget {
             color: Colors.blue[100],
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Icon(
-            icon,
-            color: Colors.blue[700],
-            size: kIsWeb ? 24 : 20,
-          ),
+          child: Icon(icon, color: Colors.blue[700], size: kIsWeb ? 24 : 20),
         ),
         const SizedBox(width: 15),
         Expanded(
@@ -392,12 +319,7 @@ class ProjectDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLinkButton(
-    String text,
-    IconData icon,
-    Color color,
-    String url,
-  ) {
+  Widget _buildLinkButton(String text, IconData icon, Color color, String url) {
     return GestureDetector(
       onTap: () => _launchUrl(url),
       child: Container(
@@ -417,11 +339,7 @@ class ProjectDetailScreen extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              color: Colors.white,
-              size: kIsWeb ? 20 : 18,
-            ),
+            Icon(icon, color: Colors.white, size: kIsWeb ? 20 : 18),
             const SizedBox(width: 10),
             Text(
               text,
@@ -439,22 +357,17 @@ class ProjectDetailScreen extends StatelessWidget {
 
   Future<void> _launchUrl(String url) async {
     try {
-      final Uri uri = Uri.parse(url);
+      final Uri uri = Uri.parse(url); //String -> Uri
       if (await canLaunchUrl(uri)) {
         await launchUrl(
           uri,
           mode: LaunchMode.externalApplication,
-        );
+        ); //dış tarayıcıda açmak için
       } else {
-        // Fallback: Try to launch with system default
-        await launchUrl(
-          uri,
-          mode: LaunchMode.platformDefault,
-        );
+        await launchUrl(uri, mode: LaunchMode.platformDefault); //Alternatif yöntem
       }
     } catch (e) {
-      print('Error launching URL: $e');
-      // Simple error handling without ScaffoldMessenger
+      print('Error launching URL: $e'); //Konsolo hata yaz.
     }
   }
 }
